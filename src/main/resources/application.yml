@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: resource profile
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  jackson:
+    time-zone: UTC
