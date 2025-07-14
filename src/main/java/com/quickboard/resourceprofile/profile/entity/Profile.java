@@ -7,11 +7,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "profiles")
+@DynamicInsert
 @NoArgsConstructor
 @Getter
 public class Profile extends BaseEntity {
@@ -39,12 +41,16 @@ public class Profile extends BaseEntity {
     @Setter
     private LocalDate birthdate;
 
+    @Column(name = "account_id", unique = true)
+    private Long accountId;
+
     @Builder
-    public Profile(String nickname, String firstName, String lastName, Gender gender, LocalDate birthdate) {
+    public Profile(String nickname, String firstName, String lastName, Gender gender, LocalDate birthdate, Long accountId) {
         this.nickname = nickname;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.birthdate = birthdate;
+        this.accountId = accountId;
     }
 }
