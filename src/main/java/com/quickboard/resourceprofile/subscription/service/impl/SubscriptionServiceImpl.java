@@ -1,7 +1,6 @@
 package com.quickboard.resourceprofile.subscription.service.impl;
 
 import com.quickboard.resourceprofile.profile.entity.Profile;
-import com.quickboard.resourceprofile.profile.exception.impl.ProfileNotFoundException;
 import com.quickboard.resourceprofile.subscription.dto.SubscriptionRequest;
 import com.quickboard.resourceprofile.subscription.dto.SubscriptionResponse;
 import com.quickboard.resourceprofile.subscription.entity.Subscription;
@@ -9,7 +8,6 @@ import com.quickboard.resourceprofile.subscription.repository.SubscriptionReposi
 import com.quickboard.resourceprofile.subscription.service.SubscriptionService;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
