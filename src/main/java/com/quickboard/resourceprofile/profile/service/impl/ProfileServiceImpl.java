@@ -8,10 +8,10 @@ import com.quickboard.resourceprofile.profile.exception.impl.ProfileNotFoundExce
 import com.quickboard.resourceprofile.profile.repository.ProfileRepository;
 import com.quickboard.resourceprofile.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +33,8 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<ProfileResponse> searchProfilesByIds(ProfileBulkRequest profileBulkRequest, Pageable pageable) {
-        return profileRepository.searchProfileByAccountIds(profileBulkRequest.profileIds(), pageable);
+    public List<ProfileResponse> searchProfilesByIds(ProfileBulkRequest profileBulkRequest) {
+        return profileRepository.searchProfileByAccountIds(profileBulkRequest.profileIds());
     }
 
     @Transactional

@@ -5,11 +5,10 @@ import com.quickboard.resourceprofile.profile.dto.ProfileRequest;
 import com.quickboard.resourceprofile.profile.dto.ProfileResponse;
 import com.quickboard.resourceprofile.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,12 +29,10 @@ public class ProfileController {
         return profileService.searchMyProfile(accountId);
     }
 
-    //todo pageable 필요없음~~
     @PostMapping("/profiles/bulk")
     @ResponseStatus(HttpStatus.OK)
-    public Page<ProfileResponse> getProfilesByIds(@RequestBody ProfileBulkRequest profileBulkRequest,
-                                                  @ParameterObject Pageable pageable){
-        return profileService.searchProfilesByIds(profileBulkRequest, pageable);
+    public List<ProfileResponse> getProfilesByIds(@RequestBody ProfileBulkRequest profileBulkRequest){
+        return profileService.searchProfilesByIds(profileBulkRequest);
     }
 
     @PostMapping("/profiles")
