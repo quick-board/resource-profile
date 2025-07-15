@@ -8,7 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "subscriptions")
+@Table(name = "subscriptions",
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = {"profile_id", "board_id"})
+        }
+)
 @NoArgsConstructor
 @Getter
 public class Subscription extends BaseEntity {
