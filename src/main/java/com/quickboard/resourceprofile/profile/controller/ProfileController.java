@@ -1,5 +1,6 @@
 package com.quickboard.resourceprofile.profile.controller;
 
+import com.quickboard.resourceprofile.common.security.dto.Passport;
 import com.quickboard.resourceprofile.profile.dto.ProfileBulkRequest;
 import com.quickboard.resourceprofile.profile.dto.ProfileRequest;
 import com.quickboard.resourceprofile.profile.dto.ProfileResponse;
@@ -25,8 +26,14 @@ public class ProfileController {
 
     @GetMapping("/profiles/me")
     @ResponseStatus(HttpStatus.OK)
-    public ProfileResponse getMyProfile(@RequestHeader("x-account-id") Long accountId){
-        return profileService.searchMyProfile(accountId);
+    public ProfileResponse getMyProfile(Passport passport){
+        return profileService.searchProfileByAccountId(passport.endUserDetails().accountId());
+    }
+
+    @GetMapping("/profiles/profile")
+    @ResponseStatus(HttpStatus.OK)
+    public ProfileResponse getProfileByAccountId(@RequestParam("account-id") Long accountId){
+        return profileService.searchProfileByAccountId(accountId);
     }
 
     @PostMapping("/profiles/bulk")
@@ -37,22 +44,34 @@ public class ProfileController {
 
     @PostMapping("/profiles")
     @ResponseStatus(HttpStatus.CREATED)
-    public void postProfile(@RequestHeader("x-account-id") Long accountId,
+    public void postProfile(Passport passport,
                             @RequestBody ProfileRequest profileRequest){
+        profileService.createProfile(passport.endUserDetails().accountId(), profileRequest);
+    }
+
+    @PostMapping("/profiles/inner")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void postProfileInner(@RequestHeader("x-account-id") Long accountId, @RequestBody ProfileRequest profileRequest){
         profileService.createProfile(accountId, profileRequest);
     }
 
     @PatchMapping("/profiles/me")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void patchProfile(@RequestHeader("x-account-id") Long accountId,
+    public void patchProfile(Passport passport,
                              @RequestBody ProfileRequest profileRequest){
-        profileService.updateProfile(accountId, profileRequest);
+        profileService.updateProfile(passport.endUserDetails().accountId(), profileRequest);
     }
 
     @DeleteMapping("/profiles/me")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProfile(@RequestHeader("x-account-id") Long accountId){
-        profileService.deleteProfile(accountId);
+    public void deleteProfile(Passport passport){
+        profileService.deleteProfile(passport.endUserDetails().accountId());
+    }
+
+    @GetMapping("/profiles/profile/exists")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean nicknameExists(@RequestParam("nickname") String nickname){
+        return profileService.nicknameExists(nickname);
     }
 
 }

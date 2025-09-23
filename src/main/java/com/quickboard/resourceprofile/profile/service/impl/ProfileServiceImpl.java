@@ -27,7 +27,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Transactional(readOnly = true)
     @Override
-    public ProfileResponse searchMyProfile(Long accountId) {
+    public ProfileResponse searchProfileByAccountId(Long accountId) {
         return profileRepository.readProfileByAccountId(accountId).orElseThrow(ProfileNotFoundException::new);
     }
 
@@ -74,5 +74,10 @@ public class ProfileServiceImpl implements ProfileService {
         } else if (result == 0) {
             throw new ProfileNotFoundException();
         }
+    }
+
+    @Override
+    public boolean nicknameExists(String nickname) {
+        return profileRepository.existsByNickname(nickname);
     }
 }

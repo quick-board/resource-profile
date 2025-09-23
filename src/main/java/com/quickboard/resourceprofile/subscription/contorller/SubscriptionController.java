@@ -1,5 +1,6 @@
 package com.quickboard.resourceprofile.subscription.contorller;
 
+import com.quickboard.resourceprofile.common.security.dto.Passport;
 import com.quickboard.resourceprofile.subscription.dto.SubscriptionRequest;
 import com.quickboard.resourceprofile.subscription.dto.SubscriptionResponse;
 import com.quickboard.resourceprofile.subscription.service.SubscriptionService;
@@ -24,13 +25,13 @@ public class SubscriptionController {
         return subscriptionService.searchSubscriptions(profileId, pageable);
     }
 
-    @PostMapping("/profiles/{id}/subscriptions")
-    public void postSubscription(@PathVariable("id") Long profileId,
+    @PostMapping("/profiles/me/subscriptions")
+    public void postSubscription(Passport passport,
                                  @RequestBody SubscriptionRequest subscriptionRequest){
-        subscriptionService.createSubscription(profileId, subscriptionRequest);
+        subscriptionService.createSubscription(passport.endUserDetails().profileId(), subscriptionRequest);
     }
 
-    @DeleteMapping("/profiles/{profile-id}/subscriptions/{subscription-id}")
+    @DeleteMapping("/profiles/me/subscriptions/{subscription-id}")
     public void deleteSubscription(@PathVariable("subscription-id") Long subscriptionId){
         subscriptionService.deleteSubscription(subscriptionId);
     }
