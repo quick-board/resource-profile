@@ -17,8 +17,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ProfileServiceTest {
 
     private ProfileService profileService;
@@ -50,20 +48,20 @@ class ProfileServiceTest {
     }
 
     @Test
-    void searchMyProfileFail() {
+    void searchProfileByAccountIdFail() {
         Long accountId = 10L;
         Mockito.when(profileRepository.readProfileByAccountId(accountId)).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(ProfileNotFoundException.class, () -> profileService.searchMyProfile(accountId));
+        Assertions.assertThrows(ProfileNotFoundException.class, () -> profileService.searchProfileByAccountId(accountId));
     }
 
     @Test
-    void searchMyProfileSuccess() {
+    void searchProfileByAccountIdSuccess() {
         Long accountId = 10L;
         ProfileResponse response = new ProfileResponse(null, null, null, null, null, null, null, null);
         Mockito.when(profileRepository.readProfileByAccountId(accountId)).thenReturn(Optional.of(response));
 
-        ProfileResponse actual = profileService.searchMyProfile(accountId);
+        ProfileResponse actual = profileService.searchProfileByAccountId(accountId);
 
         Assertions.assertEquals(response, actual);
     }

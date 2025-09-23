@@ -8,9 +8,10 @@ import java.util.List;
 
 public interface ProfileService {
     ProfileResponse searchProfile(Long profileId);
-    ProfileResponse searchMyProfile(Long accountId);
+    ProfileResponse searchProfileByAccountId(Long accountId);
     List<ProfileResponse> searchProfilesByIds(ProfileBulkRequest profileBulkRequest);
     void createProfile(Long accountId, ProfileRequest profileRequest);
     void updateProfile(Long accountId, ProfileRequest profileRequest);
     void deleteProfile(Long accountId);
+    boolean nicknameExists(String nickname);
 }
